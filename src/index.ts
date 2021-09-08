@@ -92,7 +92,7 @@ gas._main = () => {
     const linePd = readBody();
     const pdMatcher = linePd.match(/(.+)月\s*(.+)日出荷/);
     if (!pdMatcher) return;
-    // AL, AM, AS
+    // 秀、優
     const lineS4 = readBody();
     const lineS5 = readBody();
     const lineSl = readBody();
@@ -186,7 +186,14 @@ function normalize(s: string) {
 }
 
 function formatNumber(s: string): number | undefined {
-  const sn = s.replace(/\D*(\d*)\D*/, '$1');
-  if (!sn) return undefined;
-  return Number(sn);
+  const ematcher = s.match(/(\d+)$/);
+  if (ematcher) {
+    return Number(ematcher[1]);
+  }
+  const smatcher = s.match(/^(\d+)/);
+  if (smatcher) {
+    return Number(smatcher[1]);
+  }
+
+  return undefined;
 }
